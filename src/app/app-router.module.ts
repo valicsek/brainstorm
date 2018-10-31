@@ -1,16 +1,19 @@
 /**
  * This file contains the routes of the app.
  */
-import { RouterModule, Routes, Router } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { DashboardComponent } from './modules/dashboard/pages/dashboard.component';
 
 const ROUTES: Routes = [
+  { path: 'dashboard', component: DashboardComponent },
+  { path: '**', redirectTo: 'dashboard' }
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(ROUTES) ],
+  imports: [RouterModule.forRoot(ROUTES)],
   exports: [RouterModule],
   providers: []
 })
 
-export class AppRoutingModule {}
+export class AppRoutingModule { }

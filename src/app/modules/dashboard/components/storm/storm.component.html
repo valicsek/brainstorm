@@ -1,0 +1,7 @@
+<mat-card>
+  <h5>{{data.question}}</h5>
+  <mat-chip-list>
+    <mat-chip *ngFor="let hint of data.hintArray">{{hint}}</mat-chip>
+  </mat-chip-list>
+  <p>{{data.answer}}</p>
+</mat-card>
