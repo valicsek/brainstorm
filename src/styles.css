@@ -4,8 +4,10 @@
 /** Turn off default margin for body **/
 body
 {
-  margin: 0px;
+  margin: 0em;
+  background: #eaebef;
 }
+
 
 .full-width {
   width:100%;

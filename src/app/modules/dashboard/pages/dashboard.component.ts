@@ -10,6 +10,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
+  /** This variable contains if API service calls are in process or not. */
+  isAPICallInProcess: boolean;
+
   /** This variable contains the groups */
   groupArray: Group[];
 
@@ -39,9 +43,18 @@ export class DashboardComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.groupArray = this.dashboardService.getGroups();
+    this.isAPICallInProcess = true;
+    this.dashboardService.getGroups().subscribe(
+      (data: Group[]) => {
+        this.groupArray = data;
+        this.isAPICallInProcess = false;
+      },
+      error => alert(error.message)
+    );
+
+    this.groupArray = [];
     this.stormArray = [];
-    this.newGroup = new Group('', null);
+    this.newGroup = new Group(-1, '', null);
     this.newStorm = new Storm('', [], '');
   }
 
@@ -57,7 +70,10 @@ export class DashboardComponent implements OnInit {
         return item.title.toLowerCase().includes(valueOfInput.toLowerCase());
       });
     } else {
-      this.groupArray = this.dashboardService.getGroups();
+      this.dashboardService.getGroups().subscribe(
+        (data: Group[]) => this.groupArray = data,
+        error => alert(error)
+      );
     }
   }
 
@@ -95,8 +111,14 @@ export class DashboardComponent implements OnInit {
         return;
       }
 
-      this.groupArray.push(new Group(this.newGroup.title, []));
-      this.newGroup.title = '';
+      const group: Group = new Group(this.groupArray.length + 1, this.newGroup.title, []);
+      this.dashboardService.save('group', group).subscribe(
+        data => {
+          this.groupArray.push(group);
+          this.newGroup.title = '';
+        },
+        error => alert(error.message)
+      );
     }
   }
 
@@ -110,15 +132,33 @@ export class DashboardComponent implements OnInit {
       alert('You should select a group first!');
       return;
     }
-
-    this.selectedGroup.stormArray.push(this.newStorm);
-    this.newStorm = new Storm('', [], '');
+    this.dashboardService.save('storm', this.newStorm, this.selectedGroup.id).subscribe(
+      data => {
+        this.selectedGroup.stormArray.push(this.newStorm);
+        this.newStorm = new Storm('', [], '');
+      },
+      error => alert(error.message)
+    );
   }
 
   /**
-   * This function starts the study session
+   * This function starts the study session.
+   * It navigates to the game page with the group identifier.
    */
   onStartStormClicked() {
-    this.router.navigate(['game']);
+    this.router.navigate(['game', this.selectedGroup.id]);
+  }
+
+  /**
+   * This function calls when user click to a trash icon on a group view.
+   * @param group The group what we want to delete
+   */
+  onGroupItemDelete(group) {
+    if (confirm('Are you sure you want to delete?')) {
+      this.dashboardService.delete(group.id).subscribe(
+        (data: any) => alert(data.success),
+        error => alert(error.message)
+      );
+    }
   }
 }

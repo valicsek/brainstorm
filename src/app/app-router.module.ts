@@ -4,9 +4,11 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { DashboardComponent } from './modules/dashboard/pages/dashboard.component';
+import { GameComponent } from './modules/game/pages/game.component';
 
 const ROUTES: Routes = [
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'game/:id', component: GameComponent },
   { path: '**', redirectTo: 'dashboard' }
 ];
 

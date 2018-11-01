@@ -1,4 +1,17 @@
+mat-toolbar
+{
+  color: white;
+  background: #33599c;
+}
+
 mat-card
 {
-  margin: 1em 0em;
+  margin-right: 1em 0.5em;
+}
+
+.mat-card-transparent
+{
+  background: transparent;
+  box-shadow: none;
+  border: 0px;
 }

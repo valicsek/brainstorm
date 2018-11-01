@@ -8,6 +8,10 @@ import { AppMaterialModule } from './app-material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DashboardComponent } from './modules/dashboard/pages/dashboard.component';
 import { StormComponent } from './modules/dashboard/components/storm/storm.component';
+import { GameComponent } from './modules/game/pages/game.component';
+import { HttpClientModule } from '@angular/common/http';
+
+
 /** dependency of NgModel */
 import { FormsModule } from '@angular/forms';
 
@@ -17,9 +21,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   declarations: [
     AppComponent,
     DashboardComponent,
-    StormComponent
+    StormComponent,
+    GameComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     AppMaterialModule,

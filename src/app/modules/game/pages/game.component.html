@@ -1,0 +1,35 @@
+<div>
+  <mat-progress-bar mode="determinate" [value]="gameProgressValue"></mat-progress-bar>
+
+  <mat-icon class="large-icon" (click)="onBackLogoClicked()">play_circle_filled</mat-icon>
+  <mat-card>
+    <div *ngIf="!userFinished">
+      <h2>{{group.title}}</h2>
+      <h2>{{group.stormArray[actualStormIndex].question}}</h2>
+      <mat-chip-list>
+        <mat-chip selected>one hint</mat-chip>
+        <mat-chip selected>two hint</mat-chip>
+      </mat-chip-list>
+      <mat-form-field class="full-width">
+        <input id="answer" matInput placeholder="Answer" [(ngModel)]="answerInput">
+      </mat-form-field>
+      <button mat-raised-button color="accent" (click)="onSubmitClick()" [disabled]="answerInput.length == 0">Submit</button>
+      <button mat-raised-button>Skip</button>
+      <mat-card class="card-placeholder"></mat-card>
+    </div>
+
+    <div *ngIf="userFinished">
+      <h1>Congratulations.</h1>
+      <p>You finished.</p>
+      <p>Number of good answers: {{stat.good_answers.length}}</p>
+      <p>Number of bad answers: {{stat.bad_answers.length}}</p>
+
+      <h2>Storms what you did not known</h2>
+      <div *ngFor="let answer of stat.bad_answers">
+        {{answer.storm.question}}
+      </div>
+      <button mat-raised-button color="primary" (click)="onRestartButtonClicked()">Restart</button>
+      <button mat-raised-button color="primary" (click)="onBackLogoClicked()">Back to Dashboard</button>
+    </div>
+  </mat-card>
+</div>

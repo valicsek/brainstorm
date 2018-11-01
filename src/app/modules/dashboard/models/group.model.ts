@@ -9,7 +9,8 @@ export class Group {
   title: string;
   stormArray: Storm[];
 
-  constructor(title: string, stormArray: Storm[]) {
+  constructor(id: number, title: string, stormArray: Storm[]) {
+    this.id = id;
     this.title = title;
     this.stormArray = stormArray;
   }
