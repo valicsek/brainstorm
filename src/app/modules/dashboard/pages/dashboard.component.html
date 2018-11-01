@@ -1,88 +1,87 @@
 <mat-toolbar>Brainstorm</mat-toolbar>
-<mat-grid-list cols="12" rowHeight="1:6">
-  <mat-grid-tile colspan="4">
-    <mat-card>
+<div fxLayout="row" fxLayoutAlign="stretch" fxLayoutGap="1em">
+
+  <mat-card>
+    <div>
+      <mat-form-field class="full-width">
+        <input id="groupFilter" matInput placeholder="Filter" (input)="onGroupFilterInputChanged($event)">
+      </mat-form-field>
       <div>
-        <mat-form-field class="full-width">
-          <input id="groupFilter" matInput placeholder="Filter" (input)="onGroupFilterInputChanged($event)">
+        <mat-form-field>
+          <input matInput placeholder="New group" [(ngModel)]="newGroup.title" minlength="3">
         </mat-form-field>
+        <button mat-button [disabled]="newGroup.title.length == 0" (click)="onAddNewGroupItem()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+      <div *ngIf="!groupArray.length">
+        <span>
+          <mat-icon>info</mat-icon> No group has been added yet.
+        </span>
+      </div>
+
+      <mat-selection-list>
+        <mat-list-option *ngFor="let group of groupArray" (click)="onGroupItemSelected(group)">
+          <mat-icon matListIcon>space_bar</mat-icon>
+          <div style="display: inline-flex;">
+            {{group.title}}
+            <mat-chip-list style="position:absolute; top:0.5em; right:3em;">
+              <mat-chip color="accent" selected>0%</mat-chip>
+              <mat-chip color="primary" selected>{{group.stormArray.length}}</mat-chip>
+            </mat-chip-list>
+          </div>
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+  </mat-card>
+
+  <mat-card fxFlex>
+    <div>
+      <div>
+        <button mat-raised-button color="accent" [disabled]="!stormArray.length" (click)="onStartStormClicked()">Study
+          this storm</button>
+      </div>
+      <mat-card>
+        <div *ngIf="selectedGroup">
+          <h4> {{selectedGroup.title}} </h4>
+        </div>
         <div>
-          <mat-form-field>
-            <input matInput placeholder="New group" [(ngModel)]="newGroup.title" minlength="3">
+          <mat-icon>help_outline</mat-icon>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Question" [(ngModel)]="newStorm.question" minlength="3">
           </mat-form-field>
-          <button mat-button [disabled]="newGroup.title.length == 0" (click)="onAddNewGroupItem()">
-            <mat-icon>add</mat-icon>
-          </button>
         </div>
-
-        <div *ngIf="!groupArray.length">
-          <span>
-            <mat-icon>info</mat-icon> No group has been added yet.
-          </span>
-        </div>
-
-        <mat-selection-list>
-          <mat-list-option *ngFor="let group of groupArray" (click)="onGroupItemSelected(group)">
-            <mat-icon matListIcon>space_bar</mat-icon>
-            <div style="display: inline-flex;">
-              {{group.title}}
-              <mat-chip-list style="position:absolute; top:0.5em; right:3em;">
-                <mat-chip color="accent" selected>0%</mat-chip>
-                <mat-chip color="primary" selected>{{group.stormArray.length}}</mat-chip>
-              </mat-chip-list>
-            </div>
-          </mat-list-option>
-        </mat-selection-list>
-      </div>
-    </mat-card>
-  </mat-grid-tile>
-  <mat-grid-tile colspan="8">
-    <mat-card>
-      <div>
         <div>
-          <button mat-raised-button color="accent" [disabled]="!stormArray.length" (click)="onStartStormClicked()">Study
-            this storm</button>
-        </div>
-        <mat-card>
-          <div *ngIf="selectedGroup">
-            <h4> {{selectedGroup.title}} </h4>
-          </div>
-          <div>
-            <mat-icon>help_outline</mat-icon>
-            <mat-form-field>
-              <input matInput placeholder="Question" [(ngModel)]="newStorm.question" minlength="3">
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-icon>outlined_flag</mat-icon>
-            <mat-form-field>
-              <input matInput placeholder="Hint" minlength="3">
-            </mat-form-field>
-          </div>
-
-          <div>
-            <mat-icon>feedback</mat-icon>
-            <mat-form-field>
-              <input matInput placeholder="Answer" [(ngModel)]="newStorm.answer" minlength="3">
-            </mat-form-field>
-          </div>
-
-          <button mat-raised-button color="primary" (click)="onAddNewStormItem()">Add a new storm</button>
-        </mat-card>
-
-        <h2>Storms</h2>
-        <mat-form-field class="full-width">
-          <input id="stormFilter" matInput placeholder="Filter" (input)="onStormFilterInputChanged($event)">
-        </mat-form-field>
-        <app-storm *ngFor="let storm of stormArray" [data]=" storm"></app-storm>
-
-        <div *ngIf="!stormArray.length">
-          <span>
-            <mat-icon>info_outline</mat-icon> No storm has been added yet.
-          </span>
+          <mat-icon>outlined_flag</mat-icon>
+          <mat-form-field>
+            <input matInput placeholder="Hint" minlength="3">
+          </mat-form-field>
         </div>
 
+        <div>
+          <mat-icon>feedback</mat-icon>
+          <mat-form-field class="full-width">
+            <textarea matInput placeholder="Answer" [(ngModel)]="newStorm.answer" minlength="3"></textarea>
+          </mat-form-field>
+        </div>
+
+        <button mat-raised-button color="primary" (click)="onAddNewStormItem()">Add a new storm</button>
+      </mat-card>
+
+      <h2>Storms</h2>
+      <mat-form-field class="full-width">
+        <input id="stormFilter" matInput placeholder="Filter" (input)="onStormFilterInputChanged($event)">
+      </mat-form-field>
+      <app-storm *ngFor="let storm of stormArray" [data]=" storm"></app-storm>
+
+      <div *ngIf="!stormArray.length">
+        <span>
+          <mat-icon>info_outline</mat-icon> No storm has been added yet.
+        </span>
       </div>
-    </mat-card>
-  </mat-grid-tile>
-</mat-grid-list>
+
+    </div>
+  </mat-card>
+
+</div>

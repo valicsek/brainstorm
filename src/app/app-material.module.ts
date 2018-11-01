@@ -1,6 +1,5 @@
 
 import { MatCardModule } from '@angular/material/card';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
@@ -13,7 +12,6 @@ import { NgModule } from '@angular/core';
 
 const MODULES = [
   MatCardModule,
-  MatGridListModule,
   MatListModule,
   MatInputModule,
   MatChipsModule,

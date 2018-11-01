@@ -2,6 +2,7 @@ import { DashboardService } from './../dashboard.service';
 import { Component, OnInit } from '@angular/core';
 import { Group } from '../models/group.model';
 import { Storm } from '../models/storm.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -33,7 +34,9 @@ export class DashboardComponent implements OnInit {
    */
   newStorm: Storm;
 
-  constructor(private dashboardService: DashboardService) { }
+  constructor(
+    private dashboardService: DashboardService,
+    private router: Router) { }
 
   ngOnInit() {
     this.groupArray = this.dashboardService.getGroups();
@@ -116,6 +119,6 @@ export class DashboardComponent implements OnInit {
    * This function starts the study session
    */
   onStartStormClicked() {
-    alert(1);
+    this.router.navigate(['game']);
   }
 }
