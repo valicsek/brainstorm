@@ -43,6 +43,7 @@ export class DashboardComponent implements OnInit {
    * how can they improve their studying session.
    */
   tipsForStudyArray: string[];
+  randomTipIndex: number;
 
   constructor(
     private dashboardService: DashboardService,
@@ -57,6 +58,7 @@ export class DashboardComponent implements OnInit {
       'Connect what you are learning with something you already know.',
       'Mindmap always a good choice to organize your studies.'
     ];
+    this.randomTipIndex = Math.floor((Math.random() * this.tipsForStudyArray.length));
 
     this.isAPICallInProcess = true;
     this.dashboardService.getGroups().subscribe(
@@ -179,14 +181,5 @@ export class DashboardComponent implements OnInit {
         error => alert(error.message)
       );
     }
-  }
-
-  /**
-   * Return a random tip from tipsForStudyArray
-   * The Tip card use this function to show a random tip.
-   */
-  getRandomTip() {
-    const randomNumber = Math.floor((Math.random() * this.tipsForStudyArray.length));
-    return this.tipsForStudyArray[randomNumber];
   }
 }
