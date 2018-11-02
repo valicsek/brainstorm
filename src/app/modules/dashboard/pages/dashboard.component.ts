@@ -38,11 +38,25 @@ export class DashboardComponent implements OnInit {
    */
   newStorm: Storm;
 
+  /**
+   * This variable contains tips for students
+   * how can they improve their studying session.
+   */
+  tipsForStudyArray: string[];
+
   constructor(
     private dashboardService: DashboardService,
     private router: Router) { }
 
   ngOnInit() {
+    this.tipsForStudyArray = [
+      'Make own youtube video about you study.',
+      'Study multiple subjects each day.',
+      'Take notes by hand.',
+      'Test yourself frequently.',
+      'Connect what you are learning with someting you already know.'
+    ];
+
     this.isAPICallInProcess = true;
     this.dashboardService.getGroups().subscribe(
       (data: Group[]) => {
@@ -164,5 +178,14 @@ export class DashboardComponent implements OnInit {
         error => alert(error.message)
       );
     }
+  }
+
+  /**
+   * Return a random tip from tipsForStudyArray
+   * The Tip card use this function to show a random tip.
+   */
+  getRandomTip() {
+    const randomNumber = Math.floor((Math.random() * this.tipsForStudyArray.length));
+    return this.tipsForStudyArray[randomNumber];
   }
 }

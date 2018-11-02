@@ -1,4 +1,10 @@
 <mat-toolbar>Brainstorm</mat-toolbar>
+<div fxLayout="column">
+  <mat-card class="mat-card-tip">
+    <mat-icon>info_outline</mat-icon>
+    <p>Tip: {{getRandomTip()}}</p>
+  </mat-card>
+</div>
 <div fxLayout="row" fxLayoutAlign="stretch" fxLayoutGap="1em">
 
   <mat-card fxFlex="30" class="mat-card-transparent">
@@ -53,14 +59,7 @@
             <mat-icon>info_outline</mat-icon> You can add new card to the folder here.
           </span>
         </div>
-        <div hidden>
-          <mat-chip-list>
-            <mat-chip color="accent" selected>Youtube</mat-chip>
-            <mat-chip color="primary" selected>Image</mat-chip>
-          </mat-chip-list>
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Youtube link" minlength="3">
-          </mat-form-field>
+        <div>
         </div>
         <div>
           <mat-form-field class="full-width">
@@ -69,10 +68,17 @@
         </div>
         <div>
           <mat-form-field class="full-width">
-            <input matInput placeholder="Hint" minlength="3">
+            <input matInput [(ngModel)]="newStorm.hintArray[0]" placeholder="Hint" minlength="3">
           </mat-form-field>
         </div>
+        <mat-chip-list>
+          <mat-chip color="accent" selected>Youtube</mat-chip>
+          <mat-chip color="primary" disabled>Image</mat-chip>
 
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Youtube link" [(ngModel)]="newStorm.youtubeLinkArray[0]" minlength="3">
+          </mat-form-field>
+        </mat-chip-list>
         <div>
           <mat-form-field class="full-width">
             <textarea rows="4" matInput placeholder="Answer" [(ngModel)]="newStorm.answer" minlength="3"></textarea>
