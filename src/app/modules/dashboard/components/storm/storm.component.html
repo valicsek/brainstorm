@@ -1,10 +1,11 @@
 <mat-card>
-  <h5>{{data.question}}</h5>
+  <textarea readonly class="textarea-bold" matInput [value]="data.question" row="2"></textarea>
   <mat-chip-list>
     <mat-chip *ngFor="let hint of data.hintArray">{{hint}}</mat-chip>
   </mat-chip-list>
-  <p>{{data.answer}}</p>
+  <textarea matInput [value]="data.answer"></textarea>
   <div>
+    <button mat-raised-button color="accent" disabled>Edit</button>
     <button mat-raised-button color="accent" disabled>Delete</button>
   </div>
 </mat-card>

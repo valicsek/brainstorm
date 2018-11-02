@@ -17,8 +17,8 @@
       </div>
 
       <div>
-        <button mat-raised-button color="accent" [disabled]="!stormArray.length" (click)="onStartStormClicked()">Study
-          this storm</button>
+        <button mat-raised-button color="accent" class="full-width" [disabled]="!stormArray.length" (click)="onStartStormClicked()">Study
+          selected</button>
       </div>
 
       <mat-spinner *ngIf="isAPICallInProcess"></mat-spinner>
@@ -48,11 +48,23 @@
     <div>
       <mat-card *ngIf="selectedGroup">
         <div *ngIf="selectedGroup">
-          <h4> {{selectedGroup.title}} </h4>
+          <h1> {{selectedGroup.title}} </h1>
+          <span>
+            <mat-icon>info_outline</mat-icon> You can add new card to the folder here.
+          </span>
+        </div>
+        <div hidden>
+          <mat-chip-list>
+            <mat-chip color="accent" selected>Youtube</mat-chip>
+            <mat-chip color="primary" selected>Image</mat-chip>
+          </mat-chip-list>
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Youtube link" minlength="3">
+          </mat-form-field>
         </div>
         <div>
           <mat-form-field class="full-width">
-            <input matInput placeholder="Question" [(ngModel)]="newStorm.question" minlength="3">
+            <textarea rows="2" matInput placeholder="Question" [(ngModel)]="newStorm.question" minlength="3"> </textarea>
           </mat-form-field>
         </div>
         <div>
@@ -63,11 +75,12 @@
 
         <div>
           <mat-form-field class="full-width">
-            <textarea matInput placeholder="Answer" [(ngModel)]="newStorm.answer" minlength="3"></textarea>
+            <textarea rows="4" matInput placeholder="Answer" [(ngModel)]="newStorm.answer" minlength="3"></textarea>
           </mat-form-field>
         </div>
 
-        <button mat-raised-button color="primary" (click)="onAddNewStormItem()">Add a new storm</button>
+        <button mat-raised-button color="primary" [disabled]="!newStorm.question" (click)="onAddNewStormItem()">Add a
+          new storm</button>
       </mat-card>
 
       <h2>Storms</h2>

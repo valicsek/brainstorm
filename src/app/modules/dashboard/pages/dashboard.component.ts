@@ -156,7 +156,11 @@ export class DashboardComponent implements OnInit {
   onGroupItemDelete(group) {
     if (confirm('Are you sure you want to delete?')) {
       this.dashboardService.delete(group.id).subscribe(
-        (data: any) => alert(data.success),
+        (data: any) => {
+          if (data.success) {
+            location.reload();
+          }
+        },
         error => alert(error.message)
       );
     }
