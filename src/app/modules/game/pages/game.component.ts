@@ -1,8 +1,8 @@
 import { GameService } from './../game.service';
 import { Group } from './../../dashboard/models/group.model';
 import { Component, OnInit } from '@angular/core';
-import { Storm } from '../../dashboard/models/storm.model';
 import { Router, ActivatedRoute } from '@angular/router';
+import stringSimilarity from 'string-similarity';
 
 @Component({
   selector: 'app-game',
@@ -57,7 +57,7 @@ export class GameComponent implements OnInit {
         this.groupId = params.id;
         this.gameService.getGroup(this.groupId).subscribe(
           (data: any) => this.group = data.data[0],
-          error => alert(error)
+          error => alert(error.message)
         );
       }
     });
@@ -78,7 +78,8 @@ export class GameComponent implements OnInit {
    * @param realAnswer The real answer what we are waiting
    */
   private determineThatAnswerIsGood(givenAnswer, realAnswer): boolean {
-    return givenAnswer === realAnswer;
+    const result = stringSimilarity.compareTwoStrings(givenAnswer, realAnswer);
+    return result >= 0.80;
   }
 
   /**
