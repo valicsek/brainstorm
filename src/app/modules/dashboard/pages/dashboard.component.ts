@@ -54,7 +54,8 @@ export class DashboardComponent implements OnInit {
       'Study multiple subjects each day.',
       'Take notes by hand.',
       'Test yourself frequently.',
-      'Connect what you are learning with someting you already know.'
+      'Connect what you are learning with someting you already know.',
+      'Mindmap always a good choice to organize your studies.'
     ];
 
     this.isAPICallInProcess = true;
