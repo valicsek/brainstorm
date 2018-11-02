@@ -1,8 +1,9 @@
 import { DashboardService } from './../dashboard.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Group } from '../models/group.model';
 import { Storm } from '../models/storm.model';
 import { Router } from '@angular/router';
+import { DataSet, Network } from 'vis';
 
 @Component({
   selector: 'app-dashboard',
@@ -49,6 +50,13 @@ export class DashboardComponent implements OnInit {
    * Possible solution for ExpressionChangedAfterItHasBeenCheckedError
    */
   randomTipIndex: number;
+
+  /**
+   * This div element contains the mindmap of the folder
+   * <div #mindMap />
+   * It is a reference for an div element with ID
+   */
+  @ViewChild('mindMap') mindMap;
 
   constructor(
     private dashboardService: DashboardService,
@@ -109,6 +117,48 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
+   * This function builds a mindmap when the user select a folder
+   */
+  private buildMindmap() {
+    // create an array with nodes
+    const nodes = new DataSet([
+      { id: 1, label: 'Node 1' },
+      { id: 2, label: 'Node 2' },
+      { id: 3, label: 'Node 3' },
+      { id: 4, label: 'Node 4' },
+      { id: 5, label: 'Node 5' }
+    ]);
+
+    // create an array with edges
+    const edges = new DataSet([
+      { from: 1, to: 3 },
+      { from: 1, to: 2 },
+      { from: 2, to: 4 },
+      { from: 2, to: 5 },
+      { from: 3, to: 3 }
+    ]);
+
+    // create a network
+    const data = {
+      nodes: nodes,
+      edges: edges
+    };
+
+    /**
+     * TODO: Bad solution
+     * The ngIf removes the DOM element, and to fast to catch without timeout.
+     */
+    setTimeout(() => {
+      const options = {};
+      /**
+       * If you use just this.mindMap, then vis will not able the reach childNodes function.
+       * That is why we have to use the NativeElement for it.
+       */
+      const network = new Network(this.mindMap.nativeElement, data, options);
+    }, 0);
+  }
+
+  /**
    * This function been called when the user clicks to an element from the groupList
    * @param group The selected group
    */
@@ -118,6 +168,8 @@ export class DashboardComponent implements OnInit {
     if (group.stormArray) {
       this.stormArray = group.stormArray;
     }
+
+    this.buildMindmap();
   }
 
   /**
