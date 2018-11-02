@@ -43,6 +43,11 @@ export class DashboardComponent implements OnInit {
    * how can they improve their studying session.
    */
   tipsForStudyArray: string[];
+
+  /**
+   * This variable contains a random number between 0 and the length of the tipsForStudyArray
+   * Possible solution for ExpressionChangedAfterItHasBeenCheckedError
+   */
   randomTipIndex: number;
 
   constructor(
