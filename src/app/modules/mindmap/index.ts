@@ -80,7 +80,7 @@ export class MindMap {
       interaction: {
         multiselect: true,
         keyboard: {
-          enabled: true,
+          enabled: false,
           bindToWindow: true
         }
       },
