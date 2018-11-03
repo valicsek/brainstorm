@@ -169,6 +169,18 @@ export class DashboardComponent implements OnInit {
       this.stormArray = group.stormArray;
     }
 
+    /**
+     * https://stackoverflow.com/questions/43945548/scroll-to-element-on-click-in-angular-4/43945776
+     * NOTE: This setTimeout needs because if you don't use it, then
+     * it will not scroll down to the element when you select first.
+     * It because I use *ngIf="". The ngIf destroy the div element, and
+     * first time, it not exists.
+     */
+    setTimeout(() => {
+      const objDiv = document.getElementById('storm');
+      objDiv.scrollIntoView();
+    }, 0);
+
     this.buildMindmap();
   }
 
