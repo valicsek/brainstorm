@@ -13,6 +13,7 @@
 - [ ] Edit Storms
 - [ ] Delete Storms
 - [ ] Filter Storms
+- [ ] Storms should be orderable, moveable
 
 #### Mindmap
 - [ ] Colorize nodes/edges.
