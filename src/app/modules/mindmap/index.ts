@@ -19,7 +19,17 @@ export class MindMap {
     this.onDataChanged = null;
     // create an array with nodes
     this.nodes = new DataSet([
-      { id: 0, label: firstNodeName }
+      {
+        id: 0,
+        label: firstNodeName,
+        color: {
+          border: 'red',
+          background: 'red',
+        },
+        font: {
+          color: 'white'
+        }
+      }
       // { id: 2, label: 'Second node' },
     ]);
 
