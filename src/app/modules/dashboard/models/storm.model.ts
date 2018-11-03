@@ -6,11 +6,13 @@ export class Storm {
   id: number;
   question: string;
   hintArray: string[];
+  youtubeLinkArray: string[];
   answer: any;
 
   constructor(question: string, hintArray: string[], answer: any) {
     this.question = question;
     this.hintArray = hintArray;
     this.answer = answer;
+    this.youtubeLinkArray = [];
   }
 }

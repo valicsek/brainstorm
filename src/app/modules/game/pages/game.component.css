@@ -13,13 +13,3 @@ mat-progress-bar
 {
   height: 15px;
 }
-
-.card-placeholder
-{
-  position: absolute;
-  top: 0px;
-  left: -4em;
-  height: 164px;
-  width: 94%;
-  z-index: -1;
-}

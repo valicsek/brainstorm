@@ -6,16 +6,21 @@
     <div *ngIf="!userFinished">
       <h2>{{group.title}}</h2>
       <h2>{{group.stormArray[actualStormIndex].question}}</h2>
+
       <mat-chip-list>
-        <mat-chip selected>one hint</mat-chip>
-        <mat-chip selected>two hint</mat-chip>
+        <mat-chip *ngFor="let hint of group.stormArray[actualStormIndex].hintArray" selected>
+          {{hint}}
+        </mat-chip>
+        <a *ngFor="let link of group.stormArray[actualStormIndex].youtubeLinkArray" href="{{link}}" target="_blank">
+          <mat-chip color="accent" selected>Youtube</mat-chip>
+        </a>
       </mat-chip-list>
+
       <mat-form-field class="full-width">
-        <input id="answer" matInput placeholder="Answer" [(ngModel)]="answerInput">
+        <textarea id="answer" matInput placeholder="Answer" [(ngModel)]="answerInput"> </textarea>
       </mat-form-field>
       <button mat-raised-button color="accent" (click)="onSubmitClick()" [disabled]="answerInput.length == 0">Submit</button>
       <button mat-raised-button>Skip</button>
-      <mat-card class="card-placeholder"></mat-card>
     </div>
 
     <div *ngIf="userFinished">

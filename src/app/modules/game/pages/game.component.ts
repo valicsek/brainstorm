@@ -3,6 +3,7 @@ import { Group } from './../../dashboard/models/group.model';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import stringSimilarity from 'string-similarity';
+import { Storm } from '../../dashboard/models/storm.model';
 
 @Component({
   selector: 'app-game',
@@ -56,12 +57,21 @@ export class GameComponent implements OnInit {
       if (params.id) {
         this.groupId = params.id;
         this.gameService.getGroup(this.groupId).subscribe(
-          (data: any) => this.group = data.data[0],
+          (data: any) => {
+            if (!data.success) {
+              alert(data.message);
+            } else {
+              this.group = data.data[0];
+            }
+          },
           error => alert(error.message)
         );
       }
     });
 
+    this.group = new Group(-1, '', [
+      new Storm('', [], '')
+    ]);
     this.gameProgressValue = 0;
     this.actualStormIndex = 0;
     this.userFinished = false;

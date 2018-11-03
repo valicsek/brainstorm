@@ -2,6 +2,9 @@
   <textarea readonly class="textarea-bold" matInput [value]="data.question" row="2"></textarea>
   <mat-chip-list>
     <mat-chip *ngFor="let hint of data.hintArray">{{hint}}</mat-chip>
+    <a *ngFor="let link of data.youtubeLinkArray" href="{{link}}" target="_blank">
+      <mat-chip color="accent" selected>Youtube</mat-chip>
+    </a>
   </mat-chip-list>
   <textarea matInput [value]="data.answer"></textarea>
   <div>

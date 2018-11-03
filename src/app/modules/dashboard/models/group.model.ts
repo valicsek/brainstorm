@@ -1,3 +1,4 @@
+import { MindMap } from './../../mindmap/index';
 import { Storm } from './storm.model';
 
 /**
@@ -8,10 +9,12 @@ export class Group {
   id: number;
   title: string;
   stormArray: Storm[];
+  MindMap: MindMap;
 
   constructor(id: number, title: string, stormArray: Storm[]) {
     this.id = id;
     this.title = title;
     this.stormArray = stormArray;
+    this.MindMap = new MindMap(title);
   }
 }

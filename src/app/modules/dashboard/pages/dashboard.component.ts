@@ -1,9 +1,12 @@
+import { MatIconModule } from '@angular/material/icon';
 import { DashboardService } from './../dashboard.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Group } from '../models/group.model';
 import { Storm } from '../models/storm.model';
 import { Router } from '@angular/router';
 import { DataSet, Network } from 'vis';
+import { MindMap } from '../../mindmap/index';
+import { min } from 'moment';
 
 @Component({
   selector: 'app-dashboard',
@@ -119,29 +122,19 @@ export class DashboardComponent implements OnInit {
   /**
    * This function builds a mindmap when the user select a folder
    */
-  private buildMindmap() {
-    // create an array with nodes
-    const nodes = new DataSet([
-      { id: 1, label: 'Node 1' },
-      { id: 2, label: 'Node 2' },
-      { id: 3, label: 'Node 3' },
-      { id: 4, label: 'Node 4' },
-      { id: 5, label: 'Node 5' }
-    ]);
+  private buildMindmap(group: Group) {
 
-    // create an array with edges
-    const edges = new DataSet([
-      { from: 1, to: 3 },
-      { from: 1, to: 2 },
-      { from: 2, to: 4 },
-      { from: 2, to: 5 },
-      { from: 3, to: 3 }
-    ]);
-
-    // create a network
-    const data = {
-      nodes: nodes,
-      edges: edges
+    const network = new MindMap(group.title, group.MindMap.data);
+    // "Subscribe" for an event.
+    network.onDataChanged = (mindmap) => {
+      this.dashboardService.saveMindmap(group.id, mindmap).subscribe(
+        (data: any) => {
+          if (data.success === false) {
+            alert(data.message);
+          }
+        },
+        error => alert(error.message)
+      );
     };
 
     /**
@@ -149,12 +142,11 @@ export class DashboardComponent implements OnInit {
      * The ngIf removes the DOM element, and to fast to catch without timeout.
      */
     setTimeout(() => {
-      const options = {};
       /**
        * If you use just this.mindMap, then vis will not able the reach childNodes function.
        * That is why we have to use the NativeElement for it.
        */
-      const network = new Network(this.mindMap.nativeElement, data, options);
+      network.buildMap(this.mindMap.nativeElement);
     }, 0);
   }
 
@@ -162,7 +154,7 @@ export class DashboardComponent implements OnInit {
    * This function been called when the user clicks to an element from the groupList
    * @param group The selected group
    */
-  onGroupItemSelected(group) {
+  onGroupItemSelected(group: Group) {
     this.selectedGroup = group;
 
     if (group.stormArray) {
@@ -181,7 +173,8 @@ export class DashboardComponent implements OnInit {
       objDiv.scrollIntoView();
     }, 0);
 
-    this.buildMindmap();
+    // Build the mindmap of the group
+    this.buildMindmap(group);
   }
 
   /**
