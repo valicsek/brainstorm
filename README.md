@@ -15,6 +15,7 @@
 - [ ] Filter Storms
 
 #### Mindmap
+- [ ] Colorize nodes/edges.
 - [ ] Quick buttons for delete, edit, add new
 - [ ] Fullscreen mode
 - [ ] Filter storms based what user select on mindmap
