@@ -1,6 +1,7 @@
 mat-card
 {
   margin: 0.5em 0em;
+  border-radius: 0px;
 }
 
 button

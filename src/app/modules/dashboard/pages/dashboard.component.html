@@ -7,7 +7,7 @@
 </div>
 <div fxLayout="row" fxLayoutAlign="stretch" fxLayoutGap="1em">
 
-  <mat-card fxFlex="30" class="mat-card-transparent">
+  <mat-card fxFlex="30" class="mat-card-transparent" *ngIf="showGroupList">
     <div>
       <h2>Groups</h2>
       <mat-form-field class="full-width">
@@ -52,6 +52,9 @@
 
   <mat-card fxFlex class="mat-card-transparent" #Storm id="storm">
     <div>
+      <button mat-raised-button (click)="toggleGroups()">Toggle Groups</button>
+      <button mat-raised-button color="accent" *ngIf="!showGroupList" [disabled]="!stormArray.length" (click)="onStartStormClicked()">Study
+        {{ selectedGroup.title }}</button>
       <mat-card *ngIf="selectedGroup">
         <div *ngIf="selectedGroup">
           <h1> {{selectedGroup.title}} </h1>
@@ -94,7 +97,8 @@
             <input matInput placeholder="Youtube link" [(ngModel)]="newStorm.youtubeLinkArray[0]" minlength="3">
             <mat-icon matSuffix>link</mat-icon>
           </mat-form-field>
-          <button mat-raised-button color="primary" [disabled]="!newStorm.question" (click)="onAddNewStormItem()">Add a
+          <button mat-raised-button color="primary" [disabled]="!newStorm.question" (click)="onAddNewStormItem()">Add
+            a
             new storm</button>
         </div>
       </mat-card>

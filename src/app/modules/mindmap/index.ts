@@ -58,6 +58,11 @@ export class MindMap {
 
     /** Documentation: http://visjs.org/docs/network/nodes.html# */
     this.options = {
+      /**
+       * It was very disturbing that when I scrolled down
+       * I was left struggled by the mindmap.
+       */
+      clickToUse: true,
       physics: {
         enabled: true,
         repulsion: {
@@ -78,7 +83,7 @@ export class MindMap {
       },
       configure: {
         enabled: false,
-        filter: 'nodes,edges'
+        filter: 'nodes,edges,physics'
       },
       nodes: {
         shadow: true,
@@ -99,6 +104,7 @@ export class MindMap {
         addNode: (nodeData: NodeOptions, callback) => {
           const label = prompt('Name of the new node', '');
           nodeData.label = label;
+          nodeData.color = this.getRandomColor();
           this.onDataChanged(new MindMap('', this.data));
           callback(nodeData);
         },
@@ -136,6 +142,18 @@ export class MindMap {
    * http://visjs.org/examples/network/events/interactionEvents.html
    **/
   setupShortcuts(container: HTMLElement) {
+    /**
+     * This event helps the user to colorize a node.
+     */
+    this.network.on('oncontext', (params) => {
+      params.event.preventDefault();
+      if (params.nodes[0]) {
+        const node: NodeOptions = this.nodes.get(params.nodes[0]);
+        node.color = this.getRandomColor();
+        this.nodes.update(node);
+      }
+    });
+
     this.network.on('doubleClick', (params) => {
       if (params.nodes.length > 0) {
         /** https://stackoverflow.com/questions/31865910/in-the-vis-javascript-library-how-do-i-get-the-node-from-its-node-id */
@@ -144,6 +162,7 @@ export class MindMap {
           const label = prompt('Name of the Node', node.label);
           if (label) {
             node.label = label;
+            // node.color = this.getRandomColor();
             /** https://stackoverflow.com/questions/31183085/how-to-update-a-node-or-edge-property-of-visjs-using-angularjs */
             this.nodes.update(node);
           }
@@ -155,7 +174,8 @@ export class MindMap {
           this.nodes.add([{
             label: label,
             x: params.pointer.canvas.x,
-            y: params.pointer.canvas.y
+            y: params.pointer.canvas.y,
+            color: this.getRandomColor()
           }]);
         }
       }
@@ -171,4 +191,17 @@ export class MindMap {
     });
 
   }
+
+  /**
+   * Generate a random hexadecimal color for nodes
+   */
+  private getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
 }

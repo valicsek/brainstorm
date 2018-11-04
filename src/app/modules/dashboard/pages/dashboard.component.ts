@@ -4,9 +4,8 @@ import { Group } from '../models/group.model';
 import { Storm } from '../models/storm.model';
 import { Router } from '@angular/router';
 import { MindMap } from '../../mindmap/index';
-import { Input } from '@angular/compiler/src/core';
 import { NodeOptions } from 'vis';
-import { min } from 'moment';
+import stringSimilarity from 'string-similarity';
 
 @Component({
   selector: 'app-dashboard',
@@ -61,6 +60,12 @@ export class DashboardComponent implements OnInit {
   showNewQuestion: boolean;
 
   /**
+   * This variable contains that the user wants to hide the
+   * group list or not.
+   */
+  showGroupList: boolean;
+
+  /**
    * This div element contains the mindmap of the folder
    * <div #mindMap />
    * It is a reference for an div element with ID
@@ -77,6 +82,7 @@ export class DashboardComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.showGroupList = true;
     this.showNewQuestion = false;
     this.tipsForStudyArray = [
       'Make own youtube video about you study.',
@@ -103,6 +109,14 @@ export class DashboardComponent implements OnInit {
     this.stormArray = [];
     this.newGroup = new Group(-1, '', null);
     this.newStorm = new Storm('', [], '');
+  }
+
+  /**
+   * Toggle the group list.
+   * A button call this function
+   */
+  toggleGroups() {
+    this.showGroupList = !this.showGroupList;
   }
 
   /**
@@ -181,7 +195,9 @@ export class DashboardComponent implements OnInit {
 
         this.stormArray = this.selectedGroup.stormArray.filter((storm) => {
           return storm.question.toLocaleLowerCase().includes(selectedNode.label.toLowerCase()) ||
-            storm.answer.toLocaleLowerCase().includes(selectedNode.label.toLowerCase());
+            storm.answer.toLocaleLowerCase().includes(selectedNode.label.toLowerCase()) ||
+            stringSimilarity.compareTwoStrings(storm.question.toLocaleLowerCase(), selectedNode.label.toLowerCase()) >= 0.6 ||
+            stringSimilarity.compareTwoStrings(storm.answer.toLocaleLowerCase(), selectedNode.label.toLowerCase()) >= 0.6;
         });
       });
 

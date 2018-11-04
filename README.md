@@ -14,6 +14,7 @@
 - [ ] Delete Storms
 - [X] Filter Storms
 - [ ] Storms should be orderable, moveable
+- [ ] Hide, show hints
 
 #### Mindmap
 - [ ] Colorize nodes/edges.
@@ -23,9 +24,16 @@
 - [x] Select multiple nodes
 - [x] Edit nodes
 - [x] Save nodes
+- [x] Oncontext colorize the node
+- [x] Colorful nodes.
 
 ## Known Issues
 
 ### Dashboard
 #### Mindmap
 - [ ] If you modify the mindmap and reclick to the folder, it reloads the older version. If you reload the window then it refresh the data.
+
+
+### Game
+
+- [ ] If the user submit the answer using ENTER, the submit button will not disable.
