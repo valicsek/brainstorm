@@ -6,12 +6,12 @@ import { Storm } from './storm.model';
  * It contains the storm. The storm is the information what the user wants to remember.
  */
 export class Group {
-  id: number;
+  id: string;
   title: string;
   stormArray: Storm[];
   MindMap: MindMap;
 
-  constructor(id: number, title: string, stormArray: Storm[]) {
+  constructor(id: string, title: string, stormArray: Storm[]) {
     this.id = id;
     this.title = title;
     this.stormArray = stormArray;

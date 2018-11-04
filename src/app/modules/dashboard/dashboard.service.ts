@@ -1,4 +1,3 @@
-import { Group } from './models/group.model';
 import { MindMap } from './../mindmap/index';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -45,7 +44,7 @@ export class DashboardService {
    * @param mindmap The mindmap of the group
    * @returns async service function
    */
-  saveMindmap(module_id: number, mindmap: MindMap) {
+  saveMindmap(module_id: string, mindmap: MindMap) {
 
     const url = `http://localhost:1995/api/modules/${module_id}/mindmap`;
     return this.http.put(url,
@@ -56,10 +55,11 @@ export class DashboardService {
   }
   /**
    * This function calls the server API to delete a module.
-   * @param module Can be group|storm
+   * @param module_id Can be group|storm
    * @param item the item itself what we want to delete
    */
   delete(module_id) {
+    console.log(module_id);
     return this.http.delete(`http://localhost:1995/api/modules/${module_id}`);
   }
 

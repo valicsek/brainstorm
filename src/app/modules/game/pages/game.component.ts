@@ -71,8 +71,8 @@ export class GameComponent implements OnInit {
       }
     });
 
-    this.group = new Group(-1, '', [
-      new Storm('', [], '')
+    this.group = new Group('', '', [
+      new Storm('', '', [], '')
     ]);
     this.gameProgressValue = 0;
     this.actualStormIndex = 0;

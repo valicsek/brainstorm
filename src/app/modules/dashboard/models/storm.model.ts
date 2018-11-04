@@ -3,13 +3,14 @@
  * We store this object in a group. The group is the object what represents the subject itself.
  */
 export class Storm {
-  id: number;
+  id: string;
   question: string;
   hintArray: string[];
   youtubeLinkArray: string[];
   answer: any;
 
-  constructor(question: string, hintArray: string[], answer: any) {
+  constructor(id: string, question: string, hintArray: string[], answer: any) {
+    this.id = id;
     this.question = question;
     this.hintArray = hintArray;
     this.answer = answer;

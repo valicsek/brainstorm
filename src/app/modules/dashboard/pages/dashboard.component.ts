@@ -82,6 +82,7 @@ export class DashboardComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    console.log(this.uniqueIdGenerator());
     this.showGroupList = true;
     this.showNewQuestion = false;
     this.tipsForStudyArray = [
@@ -107,8 +108,8 @@ export class DashboardComponent implements OnInit {
 
     this.groupArray = [];
     this.stormArray = [];
-    this.newGroup = new Group(-1, '', null);
-    this.newStorm = new Storm('', [], '');
+    this.newGroup = new Group('', '', null);
+    this.newStorm = new Storm('', '', [], '');
   }
 
   /**
@@ -249,7 +250,7 @@ export class DashboardComponent implements OnInit {
         return;
       }
 
-      const group: Group = new Group(this.groupArray.length + 1, this.newGroup.title, []);
+      const group: Group = new Group(this.uniqueIdGenerator(), this.newGroup.title, []);
       this.dashboardService.save('group', group).subscribe(
         data => {
           this.groupArray.push(group);
@@ -273,7 +274,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.save('storm', this.newStorm, this.selectedGroup.id).subscribe(
       data => {
         this.selectedGroup.stormArray.push(this.newStorm);
-        this.newStorm = new Storm('', [], '');
+        this.newStorm = new Storm('', '', [], '');
       },
       error => alert(error.message)
     );
@@ -302,5 +303,18 @@ export class DashboardComponent implements OnInit {
         error => alert(error.message)
       );
     }
+  }
+
+  /**
+   * This function generates a unique id for groups and storms.
+   * I don't use database for storing the data.
+   * https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+   */
+  private uniqueIdGenerator() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      // tslint:disable-next-line:no-bitwise
+      const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
   }
 }
