@@ -12,14 +12,14 @@
 
 - [ ] Edit Storms
 - [ ] Delete Storms
-- [ ] Filter Storms
+- [X] Filter Storms
 - [ ] Storms should be orderable, moveable
 
 #### Mindmap
 - [ ] Colorize nodes/edges.
 - [ ] Quick buttons for delete, edit, add new
 - [ ] Fullscreen mode
-- [ ] Filter storms based what user select on mindmap
+- [X] Filter storms based what user select on mindmap
 - [x] Select multiple nodes
 - [x] Edit nodes
 - [x] Save nodes

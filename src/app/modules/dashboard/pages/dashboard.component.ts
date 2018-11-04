@@ -1,11 +1,11 @@
-import { MatIconModule } from '@angular/material/icon';
 import { DashboardService } from './../dashboard.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Group } from '../models/group.model';
 import { Storm } from '../models/storm.model';
 import { Router } from '@angular/router';
-import { DataSet, Network } from 'vis';
 import { MindMap } from '../../mindmap/index';
+import { Input } from '@angular/compiler/src/core';
+import { NodeOptions } from 'vis';
 import { min } from 'moment';
 
 @Component({
@@ -55,22 +55,36 @@ export class DashboardComponent implements OnInit {
   randomTipIndex: number;
 
   /**
+   * This variable contains that the user see the question add card or not
+   * A toggle modify this variable
+   */
+  showNewQuestion: boolean;
+
+  /**
    * This div element contains the mindmap of the folder
    * <div #mindMap />
    * It is a reference for an div element with ID
    */
   @ViewChild('mindMap') mindMap;
 
+  /**
+   * This reference contains the stormFilter input.
+   */
+  @ViewChild('stormFilter') stormFilter: ElementRef;
+
   constructor(
     private dashboardService: DashboardService,
     private router: Router) { }
 
   ngOnInit() {
+    this.showNewQuestion = false;
     this.tipsForStudyArray = [
       'Make own youtube video about you study.',
       'Study multiple subjects each day.',
       'Take notes by hand.',
+      'Each node you add should have at least 2 different question',
       'Test yourself frequently.',
+      'Mnenomics, like OSI model: Please Do Not Throw Sausage Pizza Away',
       'Connect what you are learning with something you already know.',
       'Mindmap always a good choice to organize your studies.'
     ];
@@ -116,7 +130,15 @@ export class DashboardComponent implements OnInit {
   * @param $event The event of input
   */
   onStormFilterInputChanged($event) {
-    alert('NOT IMPLEMENTED YET');
+    const valueOfInput = $event.srcElement.value.toLowerCase();
+    if (valueOfInput && this.selectedGroup) {
+      this.stormArray = this.selectedGroup.stormArray.filter((storm) => {
+        return storm.question.toLowerCase().includes(valueOfInput) ||
+          storm.answer.toLowerCase().includes(valueOfInput);
+      });
+    } else {
+      this.stormArray = this.selectedGroup.stormArray;
+    }
   }
 
   /**
@@ -124,9 +146,9 @@ export class DashboardComponent implements OnInit {
    */
   private buildMindmap(group: Group) {
 
-    const network = new MindMap(group.title, group.MindMap.data);
+    const mindMap = new MindMap(group.title, group.MindMap.data);
     // "Subscribe" for an event.
-    network.onDataChanged = (mindmap) => {
+    mindMap.onDataChanged = (mindmap) => {
       this.dashboardService.saveMindmap(group.id, mindmap).subscribe(
         (data: any) => {
           if (data.success === false) {
@@ -146,7 +168,28 @@ export class DashboardComponent implements OnInit {
        * If you use just this.mindMap, then vis will not able the reach childNodes function.
        * That is why we have to use the NativeElement for it.
        */
-      network.buildMap(this.mindMap.nativeElement);
+      mindMap.buildMap(this.mindMap.nativeElement);
+
+      /**
+       * If the user select a node, then shows the related questions.
+       */
+      mindMap.network.on('selectNode', (params) => {
+        const stormFilter: HTMLInputElement = this.stormFilter.nativeElement;
+        /** https://stackoverflow.com/questions/31865910/in-the-vis-javascript-library-how-do-i-get-the-node-from-its-node-id/31874209 */
+        const selectedNode: NodeOptions = mindMap.nodes.get(params.nodes[0]);
+        stormFilter.value = selectedNode.label;
+
+        this.stormArray = this.selectedGroup.stormArray.filter((storm) => {
+          return storm.question.toLocaleLowerCase().includes(selectedNode.label.toLowerCase()) ||
+            storm.answer.toLocaleLowerCase().includes(selectedNode.label.toLowerCase());
+        });
+      });
+
+      mindMap.network.on('deselectNode', () => {
+        this.stormFilter.nativeElement.value = '';
+        this.stormArray = this.selectedGroup.stormArray;
+      });
+
     }, 0);
   }
 

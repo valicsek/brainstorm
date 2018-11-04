@@ -55,52 +55,53 @@
       <mat-card *ngIf="selectedGroup">
         <div *ngIf="selectedGroup">
           <h1> {{selectedGroup.title}} </h1>
-          <span>
+          <div #mindMap id="mindMap"></div>
+          <span *ngIf="false">
             <mat-icon>info_outline</mat-icon> You can add new card to the folder here.
             <p>If you want to select more than one node, hold and click the mouse on the other.</p>
             <p>If you want to add new, double click to the map.</p>
             <p>If you want to modify, double click to the node.</p>
           </span>
         </div>
-        <div #mindMap id="mindMap"></div>
-        <div>
-        </div>
-        <div>
+        <mat-slide-toggle [(ngModel)]="showNewQuestion">Show new question</mat-slide-toggle>
+        <div *ngIf="showNewQuestion">
+          <div>
+            <mat-form-field class="full-width">
+              <textarea rows="2" matInput placeholder="Question" [(ngModel)]="newStorm.question" minlength="3"> </textarea>
+              <mat-hint>What is the color of the bear?</mat-hint>
+              <mat-icon matSuffix>info_outline</mat-icon>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="full-width">
+              <textarea rows="2" matInput placeholder="Answer" [(ngModel)]="newStorm.answer" minlength="3"></textarea>
+              <mat-hint>Brown</mat-hint>
+              <mat-icon matSuffix>sms</mat-icon>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field class="full-width">
+              <input matInput [(ngModel)]="newStorm.hintArray[0]" placeholder="Hint" minlength="3">
+              <mat-hint>Add a hint which helps to recall the answer</mat-hint>
+              <mat-icon matSuffix>flag_outline</mat-icon>
+            </mat-form-field>
+          </div>
+          <mat-chip-list>
+            <mat-chip color="accent" selected>Youtube</mat-chip>
+            <mat-chip color="primary" disabled>Image</mat-chip>
+          </mat-chip-list>
           <mat-form-field class="full-width">
-            <textarea rows="2" matInput placeholder="Question" [(ngModel)]="newStorm.question" minlength="3"> </textarea>
-            <mat-hint>What is the color of the bear?</mat-hint>
-            <mat-icon matSuffix>info_outline</mat-icon>
+            <input matInput placeholder="Youtube link" [(ngModel)]="newStorm.youtubeLinkArray[0]" minlength="3">
+            <mat-icon matSuffix>link</mat-icon>
           </mat-form-field>
+          <button mat-raised-button color="primary" [disabled]="!newStorm.question" (click)="onAddNewStormItem()">Add a
+            new storm</button>
         </div>
-        <div>
-          <mat-form-field class="full-width">
-            <textarea rows="2" matInput placeholder="Answer" [(ngModel)]="newStorm.answer" minlength="3"></textarea>
-            <mat-hint>Brown</mat-hint>
-            <mat-icon matSuffix>sms</mat-icon>
-          </mat-form-field>
-        </div>
-        <div>
-          <mat-form-field class="full-width">
-            <input matInput [(ngModel)]="newStorm.hintArray[0]" placeholder="Hint" minlength="3">
-            <mat-hint>Add a hint which helps to recall the answer</mat-hint>
-            <mat-icon matSuffix>flag_outline</mat-icon>
-          </mat-form-field>
-        </div>
-        <mat-chip-list>
-          <mat-chip color="accent" selected>Youtube</mat-chip>
-          <mat-chip color="primary" disabled>Image</mat-chip>
-        </mat-chip-list>
-        <mat-form-field class="full-width">
-          <input matInput placeholder="Youtube link" [(ngModel)]="newStorm.youtubeLinkArray[0]" minlength="3">
-          <mat-icon matSuffix>link</mat-icon>
-        </mat-form-field>
-        <button mat-raised-button color="primary" [disabled]="!newStorm.question" (click)="onAddNewStormItem()">Add a
-          new storm</button>
       </mat-card>
 
       <h2>Storms</h2>
       <mat-form-field class="full-width">
-        <input id="stormFilter" matInput placeholder="Filter" (input)="onStormFilterInputChanged($event)">
+        <input #stormFilter matInput placeholder="Filter" (input)="onStormFilterInputChanged($event)">
       </mat-form-field>
       <div cdkDropList>
         <app-storm cdkDrag *ngFor="let storm of stormArray" [data]="storm"></app-storm>
