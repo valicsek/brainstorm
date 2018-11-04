@@ -72,7 +72,7 @@ export class MindMap {
         hierarchical: {
           // Strict setting
           enabled: false,
-          direction: 'Up-down',
+          // direction,
           levelSeparation: 10,
         }
       },

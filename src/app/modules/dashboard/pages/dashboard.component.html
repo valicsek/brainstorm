@@ -68,27 +68,32 @@
         <div>
           <mat-form-field class="full-width">
             <textarea rows="2" matInput placeholder="Question" [(ngModel)]="newStorm.question" minlength="3"> </textarea>
+            <mat-hint>What is the color of the bear?</mat-hint>
+            <mat-icon matSuffix>info_outline</mat-icon>
           </mat-form-field>
         </div>
         <div>
           <mat-form-field class="full-width">
-            <textarea rows="4" matInput placeholder="Answer" [(ngModel)]="newStorm.answer" minlength="3"></textarea>
+            <textarea rows="2" matInput placeholder="Answer" [(ngModel)]="newStorm.answer" minlength="3"></textarea>
+            <mat-hint>Brown</mat-hint>
+            <mat-icon matSuffix>sms</mat-icon>
           </mat-form-field>
         </div>
         <div>
           <mat-form-field class="full-width">
             <input matInput [(ngModel)]="newStorm.hintArray[0]" placeholder="Hint" minlength="3">
+            <mat-hint>Add a hint which helps to recall the answer</mat-hint>
+            <mat-icon matSuffix>flag_outline</mat-icon>
           </mat-form-field>
         </div>
         <mat-chip-list>
           <mat-chip color="accent" selected>Youtube</mat-chip>
           <mat-chip color="primary" disabled>Image</mat-chip>
-
-          <mat-form-field class="full-width">
-            <input matInput placeholder="Youtube link" [(ngModel)]="newStorm.youtubeLinkArray[0]" minlength="3">
-          </mat-form-field>
         </mat-chip-list>
-
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Youtube link" [(ngModel)]="newStorm.youtubeLinkArray[0]" minlength="3">
+          <mat-icon matSuffix>link</mat-icon>
+        </mat-form-field>
         <button mat-raised-button color="primary" [disabled]="!newStorm.question" (click)="onAddNewStormItem()">Add a
           new storm</button>
       </mat-card>
@@ -97,7 +102,9 @@
       <mat-form-field class="full-width">
         <input id="stormFilter" matInput placeholder="Filter" (input)="onStormFilterInputChanged($event)">
       </mat-form-field>
-      <app-storm *ngFor="let storm of stormArray" [data]="storm"></app-storm>
+      <div cdkDropList>
+        <app-storm cdkDrag *ngFor="let storm of stormArray" [data]="storm"></app-storm>
+      </div>
 
       <div *ngIf="!stormArray.length">
         <span>

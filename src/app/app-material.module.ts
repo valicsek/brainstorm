@@ -8,6 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { NgModule } from '@angular/core';
 
@@ -20,7 +23,9 @@ const MODULES = [
   MatIconModule,
   MatToolbarModule,
   MatProgressBarModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatSnackBarModule,
+  DragDropModule
 ];
 
 @NgModule({
