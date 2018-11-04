@@ -15,3 +15,23 @@ body
 .full-width {
   width:100%;
 }
+
+
+.snackbar-good
+{
+  background: #38d81b;
+  color: white;
+}
+.snackbar-good .mat-button-wrapper
+{
+  color: white;
+}
+.snackbar-bad
+{
+  background: #e40000;
+  color: white;
+}
+.snackbar-bad .mat-button-wrapper
+{
+  color: white;
+}

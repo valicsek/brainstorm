@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import stringSimilarity from 'string-similarity';
 import { Storm } from '../../dashboard/models/storm.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-game',
@@ -48,7 +49,8 @@ export class GameComponent implements OnInit {
   constructor(
     private gameService: GameService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit() {
 
@@ -108,12 +110,22 @@ export class GameComponent implements OnInit {
       const isUserKnow = this.determineThatAnswerIsGood(this.answerInput, storm.answer);
 
       if (isUserKnow) {
+        this.snackBar.open('Perfect!', 'OK', {
+          duration: 1000,
+          verticalPosition: 'top',
+          panelClass: 'snackbar-good'
+        });
         this.stat.good_answers.push({
           storm,
           answer: this.answerInput,
           time_elapsed: 0
         });
       } else {
+        this.snackBar.open(`Wrong! The answer should be "${storm.answer}"`, 'OK', {
+          verticalPosition: 'top',
+          panelClass: 'snackbar-bad',
+          duration: 5000,
+        });
         this.stat.bad_answers.push({
           storm,
           answer: this.answerInput,
