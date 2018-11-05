@@ -8,6 +8,8 @@
 
 ### Dashboard
 
+- [X] Timer for student.
+
 #### Storms
 
 - [ ] Edit Storms
@@ -19,6 +21,7 @@
 #### Mindmap
 - [ ] Quick buttons for delete, edit, add new
 - [ ] Fullscreen mode
+- [ ] Resize mode
 - [X] Filter storms based what user select on mindmap
 - [x] Select multiple nodes
 - [x] Edit nodes
