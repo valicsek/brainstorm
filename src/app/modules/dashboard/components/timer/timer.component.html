@@ -1,0 +1,8 @@
+<div>
+  <mat-form-field>
+    <p>Minutes to study:</p>
+    <input matInput [(ngModel)]="minutesForStudy" type="number" min="1" max="90">
+  </mat-form-field>
+  <button mat-raised-button (click)="onStartTimer()">Start</button>
+  <button mat-raised-button (click)="onStopTimer()">Pause</button>
+</div>

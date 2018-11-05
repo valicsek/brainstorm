@@ -16,13 +16,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { TimerComponent } from './modules/dashboard/components/timer/timer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     StormComponent,
-    GameComponent
+    GameComponent,
+    TimerComponent
   ],
   imports: [
     HttpClientModule,

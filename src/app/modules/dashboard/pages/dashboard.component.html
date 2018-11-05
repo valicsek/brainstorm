@@ -52,6 +52,7 @@
 
   <mat-card fxFlex class="mat-card-transparent" #Storm id="storm">
     <div>
+      <app-timer></app-timer>
       <button mat-raised-button (click)="toggleGroups()">Toggle Groups</button>
       <button mat-raised-button color="accent" *ngIf="!showGroupList" [disabled]="!stormArray.length" (click)="onStartStormClicked()">Study
         {{ selectedGroup.title }}</button>
@@ -69,21 +70,21 @@
         <mat-slide-toggle [(ngModel)]="showNewQuestion">Show new question</mat-slide-toggle>
         <div *ngIf="showNewQuestion">
           <div>
-            <mat-form-field class="full-width">
+            <mat-form-field class="full-width" appearance="outline">
               <textarea rows="2" matInput placeholder="Question" [(ngModel)]="newStorm.question" minlength="3"> </textarea>
               <mat-hint>What is the color of the bear?</mat-hint>
               <mat-icon matSuffix>info_outline</mat-icon>
             </mat-form-field>
           </div>
           <div>
-            <mat-form-field class="full-width">
+            <mat-form-field class="full-width" appearance="fill">
               <textarea rows="2" matInput placeholder="Answer" [(ngModel)]="newStorm.answer" minlength="3"></textarea>
               <mat-hint>Brown</mat-hint>
               <mat-icon matSuffix>sms</mat-icon>
             </mat-form-field>
           </div>
           <div>
-            <mat-form-field class="full-width">
+            <mat-form-field class="full-width" appearance="outline">
               <input matInput [(ngModel)]="newStorm.hintArray[0]" placeholder="Hint" minlength="3">
               <mat-hint>Add a hint which helps to recall the answer</mat-hint>
               <mat-icon matSuffix>flag_outline</mat-icon>
@@ -108,7 +109,7 @@
         <input #stormFilter matInput placeholder="Filter" (input)="onStormFilterInputChanged($event)">
       </mat-form-field>
       <div cdkDropList>
-        <app-storm cdkDrag *ngFor="let storm of stormArray" [data]="storm"></app-storm>
+        <app-storm cdkDrag *ngFor="let storm of stormArray" [data]="storm" [group]="selectedGroup"></app-storm>
       </div>
 
       <div *ngIf="!stormArray.length">

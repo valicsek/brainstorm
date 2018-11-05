@@ -82,7 +82,6 @@ export class DashboardComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    console.log(this.uniqueIdGenerator());
     this.showGroupList = true;
     this.showNewQuestion = false;
     this.tipsForStudyArray = [
@@ -108,8 +107,8 @@ export class DashboardComponent implements OnInit {
 
     this.groupArray = [];
     this.stormArray = [];
-    this.newGroup = new Group('', '', null);
-    this.newStorm = new Storm('', '', [], '');
+    this.newGroup = new Group(this.uniqueIdGenerator(), '', null);
+    this.newStorm = new Storm(this.uniqueIdGenerator(), '', [], '');
   }
 
   /**
@@ -274,7 +273,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.save('storm', this.newStorm, this.selectedGroup.id).subscribe(
       data => {
         this.selectedGroup.stormArray.push(this.newStorm);
-        this.newStorm = new Storm('', '', [], '');
+        this.newStorm = new Storm(this.uniqueIdGenerator(), '', [], '');
       },
       error => alert(error.message)
     );
