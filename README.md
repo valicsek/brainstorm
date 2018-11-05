@@ -11,21 +11,20 @@
 #### Storms
 
 - [ ] Edit Storms
-- [ ] Delete Storms
+- [X] Delete Storms
 - [X] Filter Storms
 - [ ] Storms should be orderable, moveable
 - [ ] Hide, show hints
 
 #### Mindmap
-- [ ] Colorize nodes/edges.
 - [ ] Quick buttons for delete, edit, add new
 - [ ] Fullscreen mode
 - [X] Filter storms based what user select on mindmap
 - [x] Select multiple nodes
 - [x] Edit nodes
 - [x] Save nodes
-- [x] Oncontext colorize the node
-- [x] Colorful nodes.
+- [x] Colorful nodes. Oncontext colorize the node
+- [ ] Specific colors for nodes like places, times, definitions.
 
 ## Known Issues
 
