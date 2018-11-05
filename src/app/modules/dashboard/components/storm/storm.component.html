@@ -1,4 +1,9 @@
 <mat-card>
+  <mat-card-header>
+    <div fxFlex></div>
+    <mat-icon #close (click)="onStormDelete()">close</mat-icon>
+  </mat-card-header>
+
   <mat-chip-list>
     <mat-chip *ngFor="let hint of data.hintArray">{{hint}}</mat-chip>
     <a *ngFor="let link of data.youtubeLinkArray" href="{{link}}" target="_blank">
