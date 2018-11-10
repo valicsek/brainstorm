@@ -1,3 +1,4 @@
+import { CanvasWhiteboardModule } from 'ng2-canvas-whiteboard';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-router.module';
 import { NgModule } from '@angular/core';
@@ -33,7 +34,8 @@ import { TimerComponent } from './modules/dashboard/components/timer/timer.compo
     AppMaterialModule,
     BrowserAnimationsModule,
     FormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    CanvasWhiteboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

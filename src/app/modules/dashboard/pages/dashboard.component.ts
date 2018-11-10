@@ -1,3 +1,4 @@
+import { CanvasWhiteboardComponent } from 'ng2-canvas-whiteboard';
 import { DashboardService } from './../dashboard.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Group } from '../models/group.model';
@@ -9,8 +10,10 @@ import stringSimilarity from 'string-similarity';
 
 @Component({
   selector: 'app-dashboard',
+  viewProviders: [CanvasWhiteboardComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
+
 })
 export class DashboardComponent implements OnInit {
 

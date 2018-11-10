@@ -19,6 +19,8 @@
 - [ ] Hide, show hints
 
 #### Mindmap
+
+- [ ] Search for nodes
 - [ ] Quick buttons for delete, edit, add new
 - [ ] Fullscreen mode
 - [ ] Resize mode
@@ -28,7 +30,7 @@
 - [x] Save nodes
 - [x] Colorful nodes. Oncontext colorize the node
 - [ ] Specific colors for nodes like places, times, definitions.
-
+- [ ] Make grey if for a note does not have question
 ## Known Issues
 
 ### Dashboard

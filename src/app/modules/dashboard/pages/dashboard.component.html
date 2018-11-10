@@ -52,6 +52,16 @@
 
   <mat-card fxFlex class="mat-card-transparent" #Storm id="storm">
     <div>
+      <mat-card>
+        <canvas-whiteboard #canvasWhiteboard [drawButtonClass]="'drawButtonClass'" [drawButtonText]="'Draw'"
+          [clearButtonClass]="'clearButtonClass'" [clearButtonText]="'Clear'" [undoButtonText]="'Undo'"
+          [undoButtonEnabled]="true" [redoButtonText]="'Redo'" [redoButtonEnabled]="true" [colorPickerEnabled]="true"
+          [saveDataButtonEnabled]="true" [saveDataButtonText]="'Save'" [lineWidth]="5" [strokeColor]="'rgb(0,0,0)'"
+          [shouldDownloadDrawing]="true" (onBatchUpdate)="sendBatchUpdate($event)" (onClear)="onCanvasClear()" (onUndo)="onCanvasUndo($event)"
+          (onRedo)="onCanvasRedo($event)">
+        </canvas-whiteboard>
+      </mat-card>
+
       <app-timer></app-timer>
       <button mat-raised-button (click)="toggleGroups()">Toggle Groups</button>
       <button mat-raised-button color="accent" *ngIf="!showGroupList" [disabled]="!stormArray.length" (click)="onStartStormClicked()">Study
